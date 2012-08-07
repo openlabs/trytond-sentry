@@ -12,6 +12,7 @@ if os.path.isdir(DIR):
 
 import trytond
 from trytond.version import VERSION
+from trytond.exceptions import UserError
 from raven import Client
 
 
@@ -28,10 +29,18 @@ def patch(old_dispatch, client):
         try:
             return old_dispatch(*args, **kwargs)
         except Exception, exc:
-            client.captureException(True)
-            # Reraise the exception so that errors are marshalled and sent
-            # to the client as it always did
-            raise
+            if exc.args and exc.args[0] == 'NotLogged':
+                # Dont show our message or spam sentry for NotLogged errors
+                raise
+            event_id, _ignore = client.captureException(True)
+            raise UserError(
+                "Oops! Something terrible happened\n\n"
+                "Your ever loving friends at Openlabs have been notified of "
+                "this grave fault!\n",
+                "However, if you wish to speak with an Openlabs consultant "
+                "about this issue, you may use the following reference:\n\n"
+                "%s" % event_id
+                )
     return wrapper
 
 
