@@ -28,6 +28,9 @@ def patch(old_dispatch, client):
             if exc.args and exc.args[0] == 'NotLogged':
                 # Dont show our message or spam sentry for NotLogged errors
                 raise
+            elif exc.args and exc.args[0] == 'UserError':
+                # UserErrors should be displayed to the user
+                raise
             event_id, _ignore = client.captureException(True)
             raise Exception(
                 'UserError',
