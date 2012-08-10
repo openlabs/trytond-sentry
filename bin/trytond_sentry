@@ -25,7 +25,7 @@ def patch(old_dispatch, client):
         try:
             return old_dispatch(*args, **kwargs)
         except Exception, exc:
-            if exc.args and exc.args[0] == 'NotLogged':
+            if exc.args and exc.args[0] in ('NotLogged', 'AccessDenied'):
                 # Dont show our message or spam sentry for NotLogged errors
                 raise
             elif exc.args and exc.args[0] == 'UserError':
