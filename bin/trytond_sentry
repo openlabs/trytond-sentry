@@ -31,6 +31,13 @@ def patch(old_dispatch, client):
             elif exc.args and exc.args[0] == 'UserError':
                 # UserErrors should be displayed to the user
                 raise
+            elif exc.args and exc.args[0] == 'ConcurrencyException' and \
+                    exc.args[1] == 'Records were modified in the meanwhile':
+                # Sometimes when somebody else modifies the same record on
+                # your screen that you left open for a long time,
+                # you get concurrency errors.
+                # These errors must be shown to users
+                raise
             event_id, _ignore = client.captureException(True)
             raise Exception(
                 'UserError',
