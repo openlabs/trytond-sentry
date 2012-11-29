@@ -28,6 +28,8 @@ def patch(old_dispatch, client):
     def wrapper(*args, **kwargs):
         try:
             return old_dispatch(*args, **kwargs)
+        except UserError, exc:
+            raise
         except Exception, exc:
             if exc.args and exc.args[0] == 'NotLogged':
                 # Dont show our message or spam sentry for NotLogged errors
