@@ -1,6 +1,15 @@
 #!/usr/bin/env python
-#This file is part of Tryton.  The COPYRIGHT file at the top level of
-#this repository contains the full copyright notices and license terms.
+# -*- coding: utf-8 -*-
+"""
+    trytond_sentry
+
+    Tryton application launcher which monkey patches the dispatcher to
+    send errors to a sentry server if configured.
+
+    :copyright: © 2012-2013 by Openlabs Technologies & Consulting (P) Limited
+    :license: BSD, see LICENSE for more details.
+"""
+
 import sys
 import os
 import optparse
@@ -12,7 +21,7 @@ if os.path.isdir(DIR):
 
 import trytond
 from trytond.version import VERSION
-from trytond.exceptions import UserError
+from trytond.exceptions import UserError, ConcurrencyException
 from raven import Client
 
 
@@ -28,7 +37,7 @@ def patch(old_dispatch, client):
     def wrapper(*args, **kwargs):
         try:
             return old_dispatch(*args, **kwargs)
-        except UserError, exc:
+        except (UserError, ConcurrencyException), exc:
             raise
         except Exception, exc:
             if exc.args and exc.args[0] == 'NotLogged':

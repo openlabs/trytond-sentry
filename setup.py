@@ -3,13 +3,13 @@
     setup
 
 
-    :copyright: (c) 2012 by Openlabs Technologies & Consulting (P) Limited
+    :copyright: (c) 2012-2013 by Openlabs Technologies & Consulting (P) Limited
     :license: BSD, see LICENSE for more details.
 """
 from setuptools import setup
 
 setup(name='trytond_sentry',
-    version='2.4.0.1',
+    version='2.4.0.2',
     description=__doc__,
     author="Openlabs Technologies & Consulting (P) Limited",
     author_email="info@openlabs.co.in",

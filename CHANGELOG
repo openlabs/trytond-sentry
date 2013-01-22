@@ -1,0 +1,4 @@
+Version 2.4.0.2
+===============
+
+* Added ConcurrencyException to the list of Exceptions thrown to the User.
