@@ -21,7 +21,8 @@ if os.path.isdir(DIR):
 
 import trytond
 from trytond.version import VERSION
-from trytond.exceptions import UserError, ConcurrencyException
+from trytond.exceptions import UserError, UserWarning, ConcurrencyException, \
+        NotLogged
 from raven import Client
 
 
@@ -37,12 +38,9 @@ def patch(old_dispatch, client):
     def wrapper(*args, **kwargs):
         try:
             return old_dispatch(*args, **kwargs)
-        except (UserError, ConcurrencyException), exc:
+        except (UserError, UserWarning, ConcurrencyException, NotLogged), exc:
             raise
         except Exception, exc:
-            if exc.args and exc.args[0] == 'NotLogged':
-                # Dont show our message or spam sentry for NotLogged errors
-                raise
             event_id, _ignore = client.captureException(True)
             raise UserError(
                 "Oops! Something terrible happened\n\n"
