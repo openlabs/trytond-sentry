@@ -9,7 +9,7 @@
 from setuptools import setup
 
 setup(name='trytond_sentry',
-    version='2.4.0.2',
+    version='2.4.0.3',
     description=__doc__,
     author="Openlabs Technologies & Consulting (P) Limited",
     author_email="info@openlabs.co.in",

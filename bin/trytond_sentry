@@ -21,7 +21,8 @@ if os.path.isdir(DIR):
 
 import trytond
 from trytond.version import VERSION
-from trytond.exceptions import UserError, ConcurrencyException
+from trytond.exceptions import UserError, ConcurrencyException, \
+        UserWarning
 from raven import Client
 
 
@@ -37,7 +38,7 @@ def patch(old_dispatch, client):
     def wrapper(*args, **kwargs):
         try:
             return old_dispatch(*args, **kwargs)
-        except (UserError, ConcurrencyException), exc:
+        except (UserError, UserWarning, ConcurrencyException), exc:
             raise
         except Exception, exc:
             if exc.args and exc.args[0] == 'NotLogged':
