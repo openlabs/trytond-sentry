@@ -38,7 +38,7 @@ def patch(old_dispatch, client):
                 # you get concurrency errors.
                 # These errors must be shown to users
                 raise
-            event_id, _ignore = client.captureException(True)
+            event_id = client.captureException(True)
             raise Exception(
                 'UserError',
                 "Oops! Something terrible happened\n\n"
