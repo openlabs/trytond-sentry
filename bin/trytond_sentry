@@ -44,7 +44,7 @@ def patch(old_dispatch, client):
             if exc.args and exc.args[0] == 'NotLogged':
                 # Dont show our message or spam sentry for NotLogged errors
                 raise
-            event_id, _ignore = client.captureException(True)
+            event_id = client.captureException(True)
             raise UserError(
                 "Oops! Something terrible happened\n\n"
                 "Your ever loving friends at Openlabs have been notified of "
