@@ -9,7 +9,7 @@
 from setuptools import setup
 
 setup(name='trytond_sentry',
-    version='2.0.0.1',
+    version='2.0.0.2',
     description=__doc__,
     author="Openlabs Technologies & Consulting (P) Limited",
     author_email="info@openlabs.co.in",
@@ -34,7 +34,7 @@ setup(name='trytond_sentry',
     license='GPL-3',
     install_requires=[
         "trytond>=2.0,<2.1",
-        "raven",
+        "raven>=3.3.6",
     ],
     zip_safe=False,
 )
