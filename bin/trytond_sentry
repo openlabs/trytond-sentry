@@ -38,10 +38,10 @@ def patch(old_dispatch, client):
     def wrapper(*args, **kwargs):
         try:
             return old_dispatch(*args, **kwargs)
-        except (UserError, UserWarning, ConcurrencyException, NotLogged), exc:
+        except (UserError, UserWarning, ConcurrencyException, NotLogged):
             raise
-        except Exception, exc:
-            event_id, _ignore = client.captureException(True)
+        except Exception:
+            event_id = client.captureException(True)
             raise UserError(
                 "Oops! Something terrible happened\n\n"
                 "Your ever loving friends at Openlabs have been notified of "
@@ -49,7 +49,7 @@ def patch(old_dispatch, client):
                 "However, if you wish to speak with an Openlabs consultant "
                 "about this issue, you may use the following reference:\n\n"
                 "%s" % event_id
-                )
+            )
     return wrapper
 
 
@@ -100,8 +100,7 @@ def parse_commandline():
             'debug_mode',
             'pidfile',
             'logfile',
-            'cron',
-            ):
+            'cron'):
         if getattr(opt, arg) is not None:
             options[arg] = getattr(opt, arg)
 
