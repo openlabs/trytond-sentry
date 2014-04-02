@@ -8,8 +8,8 @@
 from setuptools import setup
 
 setup(name='trytond_sentry',
-    version='3.0.0.1',
-    description='Sentry for Tryton',
+    version='3.0.1.0',
+    description='Sentry Client for Tryton',
     long_description=open('README.rst').read(),
     author="Openlabs Technologies & Consulting (P) Limited",
     author_email="info@openlabs.co.in",
@@ -22,7 +22,7 @@ setup(name='trytond_sentry',
         'bin/trytond_sentry',
     ],
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Plugins',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU General Public License (GPL)',
