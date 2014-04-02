@@ -13,7 +13,7 @@ setup(name='trytond_sentry',
     long_description=open('README.rst').read(),
     author="Openlabs Technologies & Consulting (P) Limited",
     author_email="info@openlabs.co.in",
-    url="http://www.openlabs.co.in",
+    url="https://github.com/openlabs/trytond-sentry",
     package_dir={'trytond_sentry': '.'},
     packages=[
         'trytond_sentry',
