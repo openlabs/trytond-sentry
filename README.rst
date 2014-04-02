@@ -69,7 +69,7 @@ be specified in two ways:
 
     trytond_sentry -c /path/to/config
 
-where the config file has an argument
+where the config file has an argument ::
 
   sentry_dsn = http://<public_key>:<secret_key>@sentry.com/1
 
