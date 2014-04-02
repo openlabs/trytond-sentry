@@ -2,14 +2,15 @@
 """
     setup
 
-    :copyright: (c) 2012-2013 by Openlabs Technologies & Consulting (P) Limited
-    :license: BSD, see LICENSE for more details.
+    :copyright: (c) 2012-2014 by Openlabs Technologies & Consulting (P) Limited
+    :license: GPLv3, see LICENSE for more details.
 """
 from setuptools import setup
 
 setup(name='trytond_sentry',
     version='3.0.0.1',
-    description=__doc__,
+    description='Sentry for Tryton',
+    long_description=open('README.rst').read(),
     author="Openlabs Technologies & Consulting (P) Limited",
     author_email="info@openlabs.co.in",
     url="http://www.openlabs.co.in",
