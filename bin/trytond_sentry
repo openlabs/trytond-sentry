@@ -6,7 +6,7 @@
     Tryton application launcher which monkey patches the dispatcher to
     send errors to a sentry server if configured.
 
-    :copyright: © 2012-2013 by Openlabs Technologies & Consulting (P) Limited
+    :copyright: © 2012-2014 by Openlabs Technologies & Consulting (P) Limited
     :license: BSD, see LICENSE for more details.
 """
 
@@ -24,6 +24,34 @@ from trytond.version import VERSION
 from trytond.exceptions import UserError, UserWarning, ConcurrencyException, \
         NotLogged
 from raven import Client
+import pkg_resources
+
+
+_MODULES_INFO = {}
+
+
+def get_modules():
+    """
+    Return the name and version of all python and tryton
+    modules in a dictionary object.
+    """
+    if _MODULES_INFO:
+        # Return the value if it was computed and made atleast once
+        return _MODULES_INFO
+
+    # Take all the packages in the current working set and
+    # their versions
+    for module in pkg_resources.WorkingSet():
+        _MODULES_INFO[module.key] = module.version
+
+    # Now update the tryton modules alone in a tryton namespace
+    # All names are prefixed with an _ so that they appear first
+    # when viewed from sentry.
+    from trytond.modules import get_module_info, get_module_list
+    for module in get_module_list():
+        _MODULES_INFO['_trytond.modules.' + module] = \
+            get_module_info(module).get('version')
+    return _MODULES_INFO
 
 
 def patch(old_dispatch, client):
@@ -41,7 +69,11 @@ def patch(old_dispatch, client):
         except (UserError, UserWarning, ConcurrencyException, NotLogged):
             raise
         except Exception:
-            event_id = client.captureException(True)
+            data = {
+                'modules': get_modules(),
+            }
+            # TODO: Add user interface data
+            event_id = client.captureException(True, data=data)
             raise UserError(
                 "Oops! Something terrible happened\n\n"
                 "Your ever loving friends at Openlabs have been notified of "
@@ -86,6 +118,8 @@ def parse_commandline():
 
     if opt.sentry_dsn:
         client = Client(opt.sentry_dsn)
+
+        # Monkey patch the dispatcher
         from trytond.protocols import dispatcher
         dispatcher.dispatch = patch(dispatcher.dispatch, client)
 
