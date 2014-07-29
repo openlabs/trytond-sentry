@@ -7,8 +7,9 @@
 """
 from setuptools import setup
 
-setup(name='trytond_sentry',
-    version='3.0.1.0',
+setup(
+    name='trytond_sentry',
+    version='3.2.0.1',
     description='Sentry Client for Tryton',
     long_description=open('README.rst').read(),
     author="Openlabs Technologies & Consulting (P) Limited",
@@ -33,7 +34,7 @@ setup(name='trytond_sentry',
     ],
     license='GPL-3',
     install_requires=[
-        "trytond>=3.0,<3.1",
+        "trytond>=3.2,<3.3",
         "raven",
     ],
     zip_safe=False,
