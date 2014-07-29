@@ -8,12 +8,12 @@
 from setuptools import setup
 
 setup(name='trytond_sentry',
-    version='3.0.1.0',
+    version='3.0.1.1',
     description='Sentry Client for Tryton',
     long_description=open('README.rst').read(),
     author="Openlabs Technologies & Consulting (P) Limited",
     author_email="info@openlabs.co.in",
-    url="http://www.openlabs.co.in",
+    url="https://github.com/openlabs/trytond-sentry",
     package_dir={'trytond_sentry': '.'},
     packages=[
         'trytond_sentry',
