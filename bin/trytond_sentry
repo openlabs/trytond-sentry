@@ -116,8 +116,10 @@ def parse_commandline():
 
     (opt, _) = parser.parse_args()
 
-    if opt.sentry_dsn:
-        client = Client(opt.sentry_dsn)
+    sentry_dsn = opt.sentry_dsn or os.environ.get('SENTRY_DSN')
+
+    if sentry_dsn:
+        client = Client(sentry_dsn)
 
         # Monkey patch the dispatcher
         from trytond.protocols import dispatcher
