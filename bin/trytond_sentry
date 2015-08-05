@@ -28,6 +28,7 @@ import pkg_resources
 
 
 _MODULES_INFO = {}
+CONSULTANT = os.environ.get('TRYTON_CONSULTANT', '<CONSULTANT NAME>')
 
 
 def get_modules():
@@ -76,11 +77,11 @@ def patch(old_dispatch, client):
             event_id = client.captureException(True, data=data)
             raise UserError(
                 "Oops! Something terrible happened\n\n"
-                "Your ever loving friends at Openlabs have been notified of "
+                "Your ever loving friends at %s have been notified of "
                 "this grave fault!\n",
-                "However, if you wish to speak with an Openlabs consultant "
+                "However, if you wish to speak with an %s consultant "
                 "about this issue, you may use the following reference:\n\n"
-                "%s" % event_id
+                "%s" % (CONSULTANT, CONSULTANT, event_id)
             )
     return wrapper
 
